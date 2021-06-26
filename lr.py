@@ -107,6 +107,11 @@ def get_error(labels):
     return True
 
 
+#Writes the labels to their respective label files
+def write_labels(labels):
+    return True
+
+
 #Command line string
 #python lr.py model1_train_output.tsv model1_valid_output.tsv model1_test_output.tsv dict.txt model1_train_out.labels model1_test_out.labels model1_metrics_out.txt
 #python lr.py model2_train_output.tsv model2_valid_output.tsv model2_test_output.tsv dict.txt model2_train_out.labels model2_test_out.labels model2_metrics_out.txt
