@@ -111,24 +111,23 @@ def predict(model, dataset, num_attributes):
 
 
 #Command line string
-#python lr.py model1_train_output.tsv model1_valid_output.tsv model1_test_output.tsv dict.txt model1_train_out.labels model1_test_out.labels model1_metrics_out.txt
-#python lr.py model2_train_output.tsv model2_valid_output.tsv model2_test_output.tsv dict.txt model2_train_out.labels model2_test_out.labels model2_metrics_out.txt
+#python lr.py model1_train_output.tsv model1_valid_output.tsv model1_test_output.tsv dict.txt model1_train_out.labels model1_test_out.labels model1_metrics_out.txt 60
+#python lr.py model2_train_output.tsv model2_valid_output.tsv model2_test_output.tsv dict.txt model2_train_out.labels model2_test_out.labels model2_metrics_out.txt 60
 
 #Inputs
 formatted_train_input = f"output/largeoutput/{sys.argv[1]}"
-formatted_test_input = f"output/largeoutput/{sys.argv[2]}"
-dict_input = f"handout/{sys.argv[3]}"
-train_out = f"output/largeoutput/{sys.argv[4]}"
-test_out = f"output/largeoutput/{sys.argv[5]}"
-'''
+formatted_validation_input = f"output/largeoutput/{sys.argv[2]}"
 formatted_test_input = f"output/largeoutput/{sys.argv[3]}"
-inputFilenames = [formatted_train_input, formatted_validation_input, formatted_test_input, dict_input]
-#Outputs
-
+dict_input = f"handout/{sys.argv[4]}"
+train_out = f"output/largeoutput/{sys.argv[5]}"
+test_out = f"output/largeoutput/{sys.argv[6]}"
 metrics_out = f"output/largeoutput/{sys.argv[7]}"
+numEpoch = sys.argv[8]
+
+inputFilenames = [formatted_train_input, formatted_validation_input, formatted_test_input, dict_input]
+
 outputFilenames = [train_out, test_out, metrics_out]
-#Number of epochs (ie. SGD iterations)
-numEpoch = sys.argv[8]'''
+
 
 
 #Start 'er up
@@ -144,11 +143,16 @@ print(f"Train error is: {train_pair[0]}")
 with open(train_out, "w") as f:
     for label in train_pair[1]:
         f.write(f"{label}\n")
+    f.close()
 test_pair = predict(blr_model, formatted_test_input, _M)
 print(f"Test error is: {test_pair[0]}")
 with open(test_out, "w") as f:
     for label in test_pair[1]:
         f.write(f"{label}\n")
+    f.close()
+with open(metrics_out, "w") as f:
+    f.write(f"Train error: {train_pair[0]}\nTestError: {test_pair[0]}")
+    f.close()
 
 #Sending model parameters to .csv
 df = pd.DataFrame(blr_model.model_parameters)

@@ -149,7 +149,7 @@ def formatAll(input_filenames, output_filenames, misc_inputs):
             writeformatstrings(output_data_filename, format_strings)
         elif misc_inputs[1] == 2:
             format_strings_trimmed = dicts2formatstrings(indexed_word_freq_dict_collection, misc_inputs[1], 4)
-            writeformatstrings(f"{output_data_filename}_trimmed", format_strings_trimmed)
+            writeformatstrings(f"{output_data_filename}", format_strings_trimmed)
         else:
             print(f"Main: Formatting error, flag not set properly. Flag: {misc_inputs[1]}")
             return False
